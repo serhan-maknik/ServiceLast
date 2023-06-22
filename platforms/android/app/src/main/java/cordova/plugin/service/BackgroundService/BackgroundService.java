@@ -411,7 +411,7 @@ public class BackgroundService extends CordovaPlugin {
                     }
                 }else{
                     Log.d("SERSER","brand: "+(Build.BRAND.toLowerCase().equals("xiaomi")));
-
+                    if(Build.BRAND.toLowerCase().equals("xiaomi")){
                         try {
                             Intent intent = new Intent();
                             intent.setComponent(new ComponentName("com.miui.powerkeeper", "com.miui.powerkeeper.ui.HiddenAppsConfigActivity"));
@@ -421,8 +421,8 @@ public class BackgroundService extends CordovaPlugin {
                         } catch (ActivityNotFoundException anfe) {
                         }
 
-
-
+                        return;
+                    }
                     actionOnService(Actions.START);
                     this.callbackFunction(message, callbackContext);
                 }
