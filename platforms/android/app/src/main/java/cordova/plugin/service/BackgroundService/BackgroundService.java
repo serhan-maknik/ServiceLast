@@ -291,19 +291,7 @@ public class BackgroundService extends CordovaPlugin {
                     this.callbackFunction(message, callbackContext);
                 } else {
                     // Ask for Background Location Permission
-                    Log.d("SERSER","brand: "+Build.BRAND.toLowerCase());
-                    if(Build.BRAND.toLowerCase() == "xiaomi"){
-                        try {
-                            Intent intent = new Intent();
-                            intent.setComponent(new ComponentName("com.miui.powerkeeper", "com.miui.powerkeeper.ui.HiddenAppsConfigActivity"));
-                            intent.putExtra("package_name", cordova.getContext().getPackageName());
-                            intent.putExtra("package_label", cordova.getContext().getText(R.string.app_name));
-                            cordova.startActivityForResult(this,intent,505);
-                        } catch (ActivityNotFoundException anfe) {
-                        }
 
-                        return;
-                    }
                     askPermissionForBackgroundUsage();
                 }
             }else{
@@ -422,6 +410,19 @@ public class BackgroundService extends CordovaPlugin {
                         askPermissionForBackgroundUsage();
                     }
                 }else{
+                    Log.d("SERSER","brand: "+Build.BRAND.toLowerCase());
+                    if(Build.BRAND.toLowerCase() == "xiaomi"){
+                        try {
+                            Intent intent = new Intent();
+                            intent.setComponent(new ComponentName("com.miui.powerkeeper", "com.miui.powerkeeper.ui.HiddenAppsConfigActivity"));
+                            intent.putExtra("package_name", cordova.getContext().getPackageName());
+                            intent.putExtra("package_label", cordova.getContext().getText(R.string.app_name));
+                            cordova.startActivityForResult(this,intent,505);
+                        } catch (ActivityNotFoundException anfe) {
+                        }
+
+                        return;
+                    }
                     actionOnService(Actions.START);
                     this.callbackFunction(message, callbackContext);
                 }
