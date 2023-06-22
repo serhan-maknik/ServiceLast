@@ -103,6 +103,7 @@ public class BackgroundService extends CordovaPlugin {
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         pref = new cordova.plugin.service.ServiceTracker(cordova.getActivity());
+        Log.d("SERSER","ISMAIL CAN");
        /* manufacturer = Build.MANUFACTURER;
         Log.d("SERSER","BRAND: "+manufacturer);
         Toast.makeText(cordova.getActivity(), "BRAND: "+manufacturer,Toast.LENGTH_LONG).show();*/
