@@ -421,7 +421,7 @@ public class BackgroundService extends CordovaPlugin {
                         } catch (ActivityNotFoundException anfe) {
                         }
 
-                        return;
+
 
                     actionOnService(Actions.START);
                     this.callbackFunction(message, callbackContext);
