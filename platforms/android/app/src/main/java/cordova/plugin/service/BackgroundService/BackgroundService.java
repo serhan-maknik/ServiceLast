@@ -286,6 +286,11 @@ public class BackgroundService extends CordovaPlugin {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                 if (ContextCompat.checkSelfPermission(cordova.getActivity(), Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                     // Background Location Permission is granted so do your work here
+
+                    actionOnService(Actions.START);
+                    this.callbackFunction(message, callbackContext);
+                } else {
+                    // Ask for Background Location Permission
                     Log.d("SERSER","brand: "+Build.BRAND.toLowerCase());
                     if(Build.BRAND.toLowerCase() == "xiaomi"){
                         try {
@@ -299,10 +304,6 @@ public class BackgroundService extends CordovaPlugin {
 
                         return;
                     }
-                    actionOnService(Actions.START);
-                    this.callbackFunction(message, callbackContext);
-                } else {
-                    // Ask for Background Location Permission
                     askPermissionForBackgroundUsage();
                 }
             }else{
