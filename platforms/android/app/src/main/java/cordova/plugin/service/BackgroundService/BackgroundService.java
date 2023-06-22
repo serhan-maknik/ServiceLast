@@ -410,7 +410,7 @@ public class BackgroundService extends CordovaPlugin {
                         askPermissionForBackgroundUsage();
                     }
                 }else{
-                    Log.d("SERSER","brand: "+Build.BRAND.toLowerCase());
+                    Log.d("SERSER","brand: "+(Build.BRAND.toLowerCase().trim() == "xiaomi"));
                     if(Build.BRAND.toLowerCase() == "xiaomi"){
                         try {
                             Intent intent = new Intent();
