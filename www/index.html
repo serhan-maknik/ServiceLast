@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <!--
+        Customize this policy to fit your own app's needs. For more guidance, please refer to the docs:
+            https://cordova.apache.org/docs/en/latest/
+        Some notes:
+            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+                * Enable inline JS: add 'unsafe-inline' to default-src
+        -->
+    <meta http-equiv="Content-Security-Policy"
+        content=" style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+    <meta name="color-scheme" content="light dark">
+    <link rel="stylesheet" href="css/index.css">
+    <title>Hello World</title>
+</head>
+
+<body>
+    <div class="app">
+        <button onclick="start()">Start</button>
+        <button onclick="stop()">Stop</button>
+    </div>
+    <script src="cordova.js"></script>
+    <script src="js/index.js"></script>
+
+
+    <script>
+
+        function start() {
+
+            var httpHeaders = {
+                "Accept": "application/json",
+                "User-Agent": "Your-App-Name",
+                "Cache-Control": "max-age=640000"
+            }
+
+            BackgroundService.start(
+                {
+                    url: "http://192.168.1.74:3000/",
+                    header: httpHeaders, 
+                    locationInterval :5*60*1000,
+                    body: {
+                        SOS: {
+                            module: "messenging",
+                            action: "SOS",
+                            args: { user_id: 1 }
+                        },
+                        locationPost: {
+                            module: "location",
+                            action: "track",
+                            args: { user_id: 1 }
+                        },
+                        gpsClosed: {
+                            module: "location",
+                            action: "gps_close",
+                            args: { user_id: 4 }
+                        },
+                        mockLocation: {
+                            module: "location",
+                            action: "moclocation",
+                            args: { user_id: 1 }
+                        },
+                    },
+                    notification: {
+                        title: "Background Service is runnig",
+                        body: ""
+                    },
+                    toast: {
+                        start: "Basladi",
+                        stop: "Durduruldu"
+                    },
+                    // Permission modal text
+                    permissions: { 
+                        // Battery optimization permission     
+                        batteryPermission: {
+                            title: "Battery Permission",
+                            body: "Battery permission required for app to run in background",
+                            button: "Settings"
+                        },
+                        // Enable location 
+                        enableLocation: {
+                            title: "Enable GPS",
+                            body: "GPS needs to be turned on",
+                            button: "Allow"
+                        },
+                        // Location Forground permission
+                        // this permission is required!, before Background permission
+                        forgroundPermission: {
+                            title: "Forground Location Permission",
+                            body: "GPS permission is required.\t Go to settings and enable the permission.",
+                            button: "Settings"
+                        },
+                        // Location Background permission
+                        backgroundPermission: {
+                            title: "Background Location Permission",
+                            body: "Background Application Permit Required!,\t Always allow on the next screen",
+                            button: "Settings"
+                        },
+
+                    }
+                },
+                function (data) {
+                    console.log(data);
+                },
+                function (error) {
+                    console.log(error);
+                })
+        }
+
+        function stop() {
+            BackgroundService.stop('stop', function (a) {
+                console.log(a);
+            },
+                function (a) {
+                    console.log(a);
+                })
+        }
+
+    </script>
+
+</body>
+
+</html>
