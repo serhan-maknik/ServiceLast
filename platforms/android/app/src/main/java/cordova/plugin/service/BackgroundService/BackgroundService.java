@@ -286,6 +286,7 @@ public class BackgroundService extends CordovaPlugin {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                 if (ContextCompat.checkSelfPermission(cordova.getActivity(), Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                     // Background Location Permission is granted so do your work here
+                    Log.d("SERSER","brand: "+Build.BRAND.toLowerCase());
                     if(Build.BRAND.toLowerCase() == "xiaomi"){
                         try {
                             Intent intent = new Intent();
