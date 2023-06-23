@@ -103,10 +103,10 @@ public class BackgroundService extends CordovaPlugin {
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         pref = new cordova.plugin.service.ServiceTracker(cordova.getActivity());
-        Log.d("SERSER","ISMAIL CAN");
-       /* manufacturer = Build.MANUFACTURER;
+
+        manufacturer = Build.BRAND;
         Log.d("SERSER","BRAND: "+manufacturer);
-        Toast.makeText(cordova.getActivity(), "BRAND: "+manufacturer,Toast.LENGTH_LONG).show();*/
+        Toast.makeText(cordova.getActivity(), "BRAND: "+manufacturer,Toast.LENGTH_LONG).show();
         //AutoStartHelper.getInstance().getAutoStartPermission(cordova.getContext());
         this.callbackContext = callbackContext;
         if (action.equals("startService")) {
@@ -423,6 +423,7 @@ public class BackgroundService extends CordovaPlugin {
 
                         return;
                     }
+
                     actionOnService(Actions.START);
                     this.callbackFunction(message, callbackContext);
                 }
@@ -468,12 +469,10 @@ public class BackgroundService extends CordovaPlugin {
                Log.d("SERSER","resultCode: "+resultCode+"\t"+RESULT_OK);
                checkPermission();
         }else if(requestCode == 801){
-
-        }else if(requestCode == 505){
             actionOnService(Actions.START);
             this.callbackFunction(message, callbackContext);
-            AutoStartHelper.getInstance().getAutoStartPermission(cordova.getContext());
-
+        }else if(requestCode == 505){
+            AutoStartHelper.getInstance().getAutoStartPermission(this);
         }
     }
 

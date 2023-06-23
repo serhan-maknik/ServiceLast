@@ -8,6 +8,10 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
+
+import org.apache.cordova.CordovaInterface;
+import org.apache.cordova.CordovaPlugin;
+
 import cordova.plugin.service.PrefUtil;
 import java.util.List;
 
@@ -79,7 +83,13 @@ public class AutoStartHelper {
     }
 
 
-    public void getAutoStartPermission(Context context) {
+    CordovaInterface cordova;
+    cordova.plugin.service.BackgroundService service;
+
+    public void getAutoStartPermission(cordova.plugin.service.BackgroundService service) {
+        this.cordova =  service.cordova;
+        this.service = service;
+        Context context = service.cordova.getContext();
 
         String build_info = Build.BRAND.toLowerCase();
         switch (build_info) {
@@ -276,6 +286,9 @@ public class AutoStartHelper {
             Intent intent = new Intent();
             intent.setComponent(new ComponentName(packageName, componentName));
             context.startActivity(intent);
+
+            cordova.startActivityForResult(service,intent,801);
+
 
         } catch (Exception var5) {
             var5.printStackTrace();
